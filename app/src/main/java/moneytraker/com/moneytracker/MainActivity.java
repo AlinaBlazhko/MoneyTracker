@@ -2,93 +2,63 @@ package moneytraker.com.moneytracker;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.widget.EditText;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.items);
+        final RecyclerView items = (RecyclerView) findViewById(R.id.items);
 
-        final TextView add = (TextView) findViewById(R.id.add);
+        items.setAdapter(new ItemsAdapter());
 
-        final EditText name = (EditText) findViewById(R.id.name);
-        final EditText price = (EditText) findViewById(R.id.price);
+    }
 
-        name.addTextChangedListener(new TextWatcher() {
+    private class ItemsAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        final List<Item> items = new ArrayList<>();
 
-            }
+        ItemsAdapter() {
+            items.add(new Item("Car", 1000));
+            items.add(new Item("apple", 100));
+        }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+        @Override
+        public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item, null));
+        }
 
-                String s1 = name.getText().toString();
-                String s2 = price.getText().toString();
+        @Override
+        public void onBindViewHolder(ItemViewHolder holder, int position) {
+            final Item item = items.get(position);
+            holder.name.setText(item.name);
+            holder.price.setText(String.valueOf(item.price) + "\u20bd");
 
-                if ((s1.equals("")) && (s2.equals(""))) {
-                    add.setEnabled(false);
-                }
-                if ((!s1.equals("")) && (s2.equals(""))) {
-                    add.setEnabled(false);
-                }
-                if ((s1.equals("")) && (!s2.equals(""))) {
-                    add.setEnabled(false);
-                }
-                if ((!s1.equals("")) && (!s2.equals(""))) {
-                    add.setEnabled(true);
-                }
+        }
 
+        @Override
+        public int getItemCount() {
+            return items.size();
+        }
+    }
 
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-
-        });
-
-        price.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                String s1 = name.getText().toString();
-                String s2 = price.getText().toString();
-
-                if ((s1.equals("")) && (s2.equals(""))) {
-                    add.setEnabled(false);
-                }
-                if ((!s1.equals("")) && (s2.equals(""))) {
-                    add.setEnabled(false);
-                }
-                if ((s1.equals("")) && (!s2.equals(""))) {
-                    add.setEnabled(false);
-                }
-                if ((!s1.equals("")) && (!s2.equals(""))) {
-                    add.setEnabled(true);
-                }
+    private class ItemViewHolder extends RecyclerView.ViewHolder {
+        private final TextView name, price;
 
 
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-
-        });
+        public ItemViewHolder(View itemView) {
+            super(itemView);
+            name = (TextView) itemView.findViewById(R.id.name);
+            price = (TextView) itemView.findViewById(R.id.price);
+        }
     }
 }
