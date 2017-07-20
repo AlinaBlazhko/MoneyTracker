@@ -1,64 +1,47 @@
 package moneytraker.com.moneytracker;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.items);
-        final RecyclerView items = (RecyclerView) findViewById(R.id.items);
+        setContentView(R.layout.main_activity);
+        final TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
+        final ViewPager pages = (ViewPager) findViewById(R.id.pages);
+        pages.setAdapter(new MainPagerAdapter());
 
-        items.setAdapter(new ItemsAdapter());
+
+        //        final RecyclerView items = (RecyclerView) findViewById(R.id.items);
+        //        items.setAdapter(new ItemsAdapter());
 
     }
 
-    private class ItemsAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
-        final List<Item> items = new ArrayList<>();
+    private class MainPagerAdapter extends FragmentPagerAdapter {
+        private final String[] titles;
 
-        ItemsAdapter() {
-            items.add(new Item("Car", 1000));
-            items.add(new Item("apple", 100));
-        }
+        MainPagerAdapter() {
+            super(getSupportFragmentManager());
+            titles = getResources().getStringArray(R.array.main_pager_titles);
 
-        @Override
-        public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item, null));
-        }
-
-        @Override
-        public void onBindViewHolder(ItemViewHolder holder, int position) {
-            final Item item = items.get(position);
-            holder.name.setText(item.name);
-            holder.price.setText(String.valueOf(item.price) + "\u20bd");
 
         }
 
         @Override
-        public int getItemCount() {
-            return items.size();
+        public int getCount() {
+            return titles.length;
         }
-    }
 
-    private class ItemViewHolder extends RecyclerView.ViewHolder {
-        private final TextView name, price;
-
-
-        public ItemViewHolder(View itemView) {
-            super(itemView);
-            name = (TextView) itemView.findViewById(R.id.name);
-            price = (TextView) itemView.findViewById(R.id.price);
+        @Override
+        public Fragment getItem(int position) {
+            return null;
         }
     }
 }
