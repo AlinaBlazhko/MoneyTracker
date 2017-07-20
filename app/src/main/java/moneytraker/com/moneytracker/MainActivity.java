@@ -15,7 +15,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
         final TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         final ViewPager pages = (ViewPager) findViewById(R.id.pages);
+
         pages.setAdapter(new MainPagerAdapter());
+        tabs.setupWithViewPager(pages);
 
 
         //        final RecyclerView items = (RecyclerView) findViewById(R.id.items);
@@ -30,8 +32,24 @@ public class MainActivity extends AppCompatActivity {
         MainPagerAdapter() {
             super(getSupportFragmentManager());
             titles = getResources().getStringArray(R.array.main_pager_titles);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            final ItemsFragment fragment = new ItemsFragment();
+            Bundle args = new Bundle();
 
 
+            args.putString(ItemsFragment.ARG_TYPE, Item.TYPE_EXPENSE);
+            fragment.setArguments(args);
+            return fragment;
+
+        }
+
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return titles[position];
         }
 
         @Override
@@ -39,9 +57,6 @@ public class MainActivity extends AppCompatActivity {
             return titles.length;
         }
 
-        @Override
-        public Fragment getItem(int position) {
-            return null;
-        }
+
     }
 }
