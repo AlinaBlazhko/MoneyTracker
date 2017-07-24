@@ -2,4 +2,9 @@
 <resources>
     <dimen name="marginL">16dp</dimen>
     <dimen name="text_size">30sp</dimen>
+    <dimen name="mid_text_size">21sp</dimen>
+    <dimen name="big_text_size">24sp</dimen>
+    <dimen name="max_indent">20dp</dimen>
+    <dimen name="mid_indent">16dp</dimen>
+    <dimen name="min_indent">5dp</dimen>
 </resources>

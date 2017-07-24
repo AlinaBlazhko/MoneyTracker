@@ -3,4 +3,10 @@
     <color name="colorPrimary">#95c9b8</color>
     <color name="colorPrimaryDark">#1ca498</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="itemBackName">#fcc31e</color>
+    <color name="itemBackPrice">#e67e22</color>
+    <color name="tabs">#95c9b8</color>
+    <color name="colorIndicator">#dbece6</color>
+    <color name="colorActive">#ffffff</color>
+
 </resources>
